@@ -1,0 +1,7 @@
+Instructions
+
+Use A and D (or left arrow and right arrow) to move jack around.
+Brown leaves are destroyed on contact, striped leaves spring you further through the level
+Press P to pause the game and P again to resume
+
+
