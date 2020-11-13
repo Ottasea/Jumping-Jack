@@ -20,7 +20,7 @@ public class eggCollectScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.StartsWith("Jack"))
+        if (collision.gameObject.name.StartsWith("Jack") && playerController.eggFull == false)
         {
             Destroy(gameObject);
             playerController.eggTotal += 1;
@@ -28,7 +28,12 @@ public class eggCollectScript : MonoBehaviour
 
         }
 
-        else if (collision.gameObject.name.StartsWith("Destroyer"))
+        else if (collision.gameObject.name.StartsWith("Jack") && playerController.eggFull == true)
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.name.StartsWith("Destroyer"))
         {
             Destroy(gameObject);
         }

@@ -11,6 +11,8 @@ public class uiManagerScript : MonoBehaviour
     GameObject[] score;
     GameObject[] eggBar;
 
+    public Slider slider;
+
     public playerScript playerController;
     
     // Start is called before the first frame update
@@ -66,7 +68,7 @@ public class uiManagerScript : MonoBehaviour
     
     public void EggBar()
     {
-       
+        slider.value = playerController.eggTotal;
     }
 
     public void Reload()

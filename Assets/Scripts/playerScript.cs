@@ -21,10 +21,11 @@ public class playerScript : MonoBehaviour
     public bool superJack = false;
     public float startTime = 5.0f;
     public float sJTimer;
+    public bool eggFull;
 
     //Score Update\\
     public Text scoreText;
-    public int eggTotal = 0;
+    public float eggTotal = 0f;
     public float topScore = 0.0f;
     public float maxY;
     public float currentY;
@@ -35,13 +36,16 @@ public class playerScript : MonoBehaviour
     {
         rB = GetComponent<Rigidbody2D>();
         alive = true;
+        eggFull = false;
         
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {       
         currentY = transform.position.y;
+        
+        
         
         if (moveInput < 0)
         {
@@ -59,18 +63,11 @@ public class playerScript : MonoBehaviour
             maxY = currentY;
             topScore++;
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (eggTotal == 5)
-            {
-                superJack = true;
-                sJTimer = startTime;
-            }
-            
-        }
+       
 
         SuperJack();
+
+        EggFull();
 
 
         scoreText.text = "Score: " + Mathf.Round(topScore).ToString();
@@ -95,16 +92,41 @@ public class playerScript : MonoBehaviour
 
     }
 
-    void SuperJack()
+    public void SuperJack()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (eggFull == true)
+            {
+                superJack = true;
+                sJTimer = startTime;
+            }
+
+            else
+            {
+                Debug.Log("not full yet");
+            }
+        }
+
         if (superJack == true)
         {
             sJTimer -= Time.deltaTime;
+            eggTotal -= Time.deltaTime;
         }
 
-        if (sJTimer <= 0)
+        if (sJTimer <= 0 && superJack == true)
         {
             superJack = false;
+            eggFull = false;
+            eggTotal = 0;
+        }
+    }
+
+    public void EggFull()
+    {
+        if (eggTotal == 5)
+        {
+            eggFull = true;
         }
     }
 

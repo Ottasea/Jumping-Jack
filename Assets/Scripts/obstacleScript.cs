@@ -55,22 +55,28 @@ public class obstacleScript : MonoBehaviour
     {
         if (collision.gameObject.name.StartsWith("Jack"))
         {
-            if (playerController.eggTotal > 0 && !isFood)
+            if (playerController.eggTotal > 0 && !isFood && playerController.superJack == false)
             {
                 playerController.eggTotal = 0;
+                playerController.eggFull = false;
                 Destroy(gameObject);
             }
 
-            else if (playerController.eggTotal <= 0 && !isFood)
+            else if (playerController.eggTotal <= 0 && !isFood && playerController.superJack == false)
             {
                 playerController.alive = false;
                 Time.timeScale = 0;
             }
 
-            else if (isFood == true)
+            else if (isFood == true && playerController.superJack == false)
             {
                 playerController.alive = false;
                 Time.timeScale = 0;
+            }
+
+            else
+            {
+                Destroy(gameObject);
             }
 
 
