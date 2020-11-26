@@ -10,8 +10,14 @@ public class uiManagerScript : MonoBehaviour
     GameObject[] pauseObjects;
     GameObject[] score;
     GameObject[] eggBar;
+    GameObject[] eggShake;
+    GameObject[] gOScore;
 
     public Slider slider;
+
+    public bool shakeEgg;
+
+    public bool eggHide;
 
     public playerScript playerController;
     
@@ -24,9 +30,16 @@ public class uiManagerScript : MonoBehaviour
         finishObjects = GameObject.FindGameObjectsWithTag("showOnFinish");
         score = GameObject.FindGameObjectsWithTag("hideScore");
         eggBar = GameObject.FindGameObjectsWithTag("hideEggTotal");
+        eggShake = GameObject.FindGameObjectsWithTag("hideEggShake");
+        gOScore = GameObject.FindGameObjectsWithTag("gameOverScore");
 
         hideFinished();
         hidePaused();
+        hideEggShake();
+        hideGameoverScore();
+
+        shakeEgg = false;
+        eggHide = false;
 
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<playerScript>();
     }
@@ -36,6 +49,7 @@ public class uiManagerScript : MonoBehaviour
     {
 
         EggBar();
+        ShakeEgg();
 
         //uses the p button to pause and unpause the game
         if (Input.GetKeyDown(KeyCode.P))
@@ -43,17 +57,28 @@ public class uiManagerScript : MonoBehaviour
             if (Time.timeScale == 1 && playerController.alive == true)
             {
                 Time.timeScale = 0;
-                showPaused();
-                hideScore();
-                hideEggTotal();
+                eggHide = true;                
+                showPaused();                
+                hideScore();               
+                
             }
             else if (Time.timeScale == 0 && playerController.alive == true)
             {
+                eggHide = false;
                 Time.timeScale = 1;
                 hidePaused();
-                showScore();
-                showEggTotal();
+                showScore();                
             }
+        }
+
+        if (eggHide == true)
+        {
+            hideEggTotal();
+        }
+
+        else if (eggHide == false)
+        {
+            showEggTotal();
         }
 
 
@@ -61,8 +86,33 @@ public class uiManagerScript : MonoBehaviour
         {
             showFinished();
             hideEggTotal();
+            hideEggShake();
+            hideScore();
+            showGameoverScore();
         }
 
+
+        if (playerController.eggTotal == 5)
+        {
+            shakeEgg = true;
+            eggHide = true;
+        }
+
+        else
+        {
+            shakeEgg = false;
+            eggHide = false;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (shakeEgg == true)
+            {
+                shakeEgg = false;
+            }
+
+        }
     }
 
     
@@ -104,6 +154,23 @@ public class uiManagerScript : MonoBehaviour
     public void hidePaused()
     {
         foreach (GameObject g in pauseObjects)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    public void showGameoverScore()
+    {
+        foreach (GameObject g in gOScore)
+        {
+            g.SetActive(true);
+        }
+    }
+
+    //hides objects with ShowOnPause tag
+    public void hideGameoverScore()
+    {
+        foreach (GameObject g in gOScore)
         {
             g.SetActive(false);
         }
@@ -155,6 +222,38 @@ public class uiManagerScript : MonoBehaviour
         foreach (GameObject g in eggBar)
         {
             g.SetActive(true);
+        }
+    }
+
+    public void hideEggShake()
+    {
+        foreach (GameObject g in eggShake)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    public void showEggShake()
+    {
+        foreach (GameObject g in eggShake)
+        {
+            g.SetActive(true);
+        }
+    }
+
+    public void ShakeEgg()
+    {
+
+        if (shakeEgg == true)
+        {
+            showEggShake();
+            hideEggTotal();
+        }
+
+        if (shakeEgg == false)
+        {
+            showEggTotal();
+            hideEggShake();
         }
     }
 

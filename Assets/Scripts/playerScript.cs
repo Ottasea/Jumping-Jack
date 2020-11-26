@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class playerScript : MonoBehaviour
 {
     Rigidbody2D rB; //Rigidbody for the player
+    SpriteRenderer mySprite;
 
     //Player Movement\\
     float movement = 0f; 
@@ -15,6 +16,17 @@ public class playerScript : MonoBehaviour
     public bool alive;
     public float screenRight;
     public float screenLeft;
+    
+    public bool hasLanded;
+    public bool isBouncing;
+    
+    public Sprite falling;
+    public Sprite jumping;
+    public Sprite landing;
+
+    public Sprite superFalling;
+    public Sprite superJumping;
+    public Sprite superLanding;
     
     
     //Super Jack\\
@@ -25,8 +37,10 @@ public class playerScript : MonoBehaviour
 
     //Score Update\\
     public Text scoreText;
+    public Text currentScore;
+    public Text highScore;
     public float eggTotal = 0f;
-    public float topScore = 0.0f;
+    public int topScore = 0;
     public float maxY;
     public float currentY;
 
@@ -35,17 +49,19 @@ public class playerScript : MonoBehaviour
     void Start()
     {
         rB = GetComponent<Rigidbody2D>();
+        mySprite = GetComponent<SpriteRenderer>();
         alive = true;
         eggFull = false;
-        
+        isBouncing = false;
+        highScore.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+
     }
 
     // Update is called once per frame
     void Update()
     {       
         currentY = transform.position.y;
-        
-        
+                
         
         if (moveInput < 0)
         {
@@ -63,14 +79,24 @@ public class playerScript : MonoBehaviour
             maxY = currentY;
             topScore++;
         }
-       
 
         SuperJack();
 
         EggFull();
 
+        NormalJump();
 
-        scoreText.text = "Score: " + Mathf.Round(topScore).ToString();
+        SuperJump();
+
+        if (topScore > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            PlayerPrefs.SetInt("HighScore", topScore);
+            highScore.text = Mathf.Round(topScore).ToString();
+        }
+
+
+        scoreText.text = Mathf.Round(topScore).ToString();
+        currentScore.text = Mathf.Round(topScore).ToString();
     }
     void FixedUpdate() //Applies the velocity required for the player to move in the direction they choose whilst bouncing on platforms
     {
@@ -130,6 +156,32 @@ public class playerScript : MonoBehaviour
         }
     }
 
+    public void NormalJump()
+    {
+        if (rB.velocity.y < 0.1 && superJack == false)
+        {
+            mySprite.sprite = falling;
+        }
+
+        else if (rB.velocity.y > 0 && superJack == false)
+        {
+            mySprite.sprite = jumping;
+        }
+    }
+
+    public void SuperJump()
+    {
+        if (rB.velocity.y < 0.1 && superJack == true)
+        {
+            mySprite.sprite = superFalling;
+        }
+
+        else if (rB.velocity.y > 0 && superJack == true)
+        {
+            mySprite.sprite = superJumping;
+        }
+    }
+ 
 }
 
 

@@ -13,6 +13,8 @@ TagManager:
   - warnLeft
   - warnRight
   - hideEggTotal
+  - hideEggShake
+  - gameOverScore
   layers:
   - Default
   - TransparentFX
