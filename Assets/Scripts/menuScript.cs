@@ -6,8 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class menuScript : MonoBehaviour
 {
+
     public void StartGame()
     {
-        SceneManager.LoadScene("MainLevel");
+        SceneManager.LoadScene("Mainlevel");
     }
+
+    public void HowTo()
+    {
+        SceneManager.LoadScene("HowTo");
+    }
+
 }

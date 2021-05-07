@@ -8,12 +8,17 @@ public class obstacleScript : MonoBehaviour
     public bool isLGoose = false;
     public bool isRGoose = false;
 
+    public GameObject gooseDeath;
+    public GameObject foodDeath;
+
 
     public float gooseWorth;
     
     public float speed = 10f;
 
     public playerScript playerController;
+
+    public AudioClip playerHit;
 
 
     // Start is called before the first frame update
@@ -57,13 +62,16 @@ public class obstacleScript : MonoBehaviour
         {
             if (playerController.eggTotal > 0 && !isFood && playerController.superJack == false)
             {
+                AudioSource.PlayClipAtPoint(playerHit, transform.position, 1.0F);
                 playerController.eggTotal = 0;
                 playerController.eggFull = false;
+                Instantiate(gooseDeath, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
 
             else if (playerController.eggTotal <= 0 && !isFood && playerController.superJack == false)
             {
+                AudioSource.PlayClipAtPoint(playerHit, transform.position, 1.0F);
                 playerController.alive = false;
                 Time.timeScale = 0;
             }
@@ -74,14 +82,20 @@ public class obstacleScript : MonoBehaviour
                 Time.timeScale = 0;
             }
 
+            else if (isFood == true && playerController.superJack == true)
+            {
+                Instantiate(foodDeath, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
+
             else
             {
+                Instantiate(gooseDeath, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
 
 
         }
     }
-
 
 }

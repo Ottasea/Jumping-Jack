@@ -328,8 +328,13 @@ MonoBehaviour:
   isFood: 1
   isLGoose: 0
   isRGoose: 0
+  gooseDeath: {fileID: 0}
+  foodDeath: {fileID: 7785796844791757721, guid: c3ca88529a7bc0b418a0f964060db116,
+    type: 3}
   gooseWorth: 0
   speed: 10
+  playerController: {fileID: 0}
+  playerHit: {fileID: 0}
 --- !u!50 &6590210418406284657
 Rigidbody2D:
   serializedVersion: 4

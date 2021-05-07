@@ -150,7 +150,7 @@ public class playerScript : MonoBehaviour
 
     public void EggFull()
     {
-        if (eggTotal == 5)
+        if (eggTotal == 10)
         {
             eggFull = true;
         }

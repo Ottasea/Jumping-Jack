@@ -323,5 +323,10 @@ MonoBehaviour:
   isFood: 1
   isLGoose: 0
   isRGoose: 0
+  gooseDeath: {fileID: 0}
+  foodDeath: {fileID: 1872343541057310835, guid: 6124f404f1659684994fd856a1b75b31,
+    type: 3}
   gooseWorth: 0
   speed: 10
+  playerController: {fileID: 0}
+  playerHit: {fileID: 0}

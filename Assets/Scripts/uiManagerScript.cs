@@ -20,7 +20,11 @@ public class uiManagerScript : MonoBehaviour
     public bool eggHide;
 
     public playerScript playerController;
-    
+
+    public Image eggBarImage;
+    public Image eggBarFill;
+    public Image eggShakeImage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +46,10 @@ public class uiManagerScript : MonoBehaviour
         eggHide = false;
 
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<playerScript>();
+
+        
+
+        
     }
 
     // Update is called once per frame
@@ -56,29 +64,24 @@ public class uiManagerScript : MonoBehaviour
         {
             if (Time.timeScale == 1 && playerController.alive == true)
             {
-                Time.timeScale = 0;
-                eggHide = true;                
+                Time.timeScale = 0;               
                 showPaused();                
-                hideScore();               
-                
+                hideScore();
+                eggBarImage.GetComponent<Image>().enabled = false;
+                eggBarFill.GetComponent<Image>().enabled = false;
+                eggShakeImage.GetComponent<Image>().enabled = false;
+
             }
             else if (Time.timeScale == 0 && playerController.alive == true)
             {
-                eggHide = false;
                 Time.timeScale = 1;
                 hidePaused();
-                showScore();                
+                showScore();
+                eggBarImage.GetComponent<Image>().enabled = true;
+                eggBarFill.GetComponent<Image>().enabled = true;
+                eggShakeImage.GetComponent<Image>().enabled = true;
+
             }
-        }
-
-        if (eggHide == true)
-        {
-            hideEggTotal();
-        }
-
-        else if (eggHide == false)
-        {
-            showEggTotal();
         }
 
 
@@ -91,8 +94,17 @@ public class uiManagerScript : MonoBehaviour
             showGameoverScore();
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (Time.timeScale == 0 && playerController.alive == false)
+            {
+                Reload();
 
-        if (playerController.eggTotal == 5)
+            }
+        }
+
+
+            if (playerController.eggTotal == 10)
         {
             shakeEgg = true;
             eggHide = true;
@@ -260,6 +272,17 @@ public class uiManagerScript : MonoBehaviour
     public void doExitGame()
     {
         Application.Quit();
+    }
+
+    public void UnPauseGame()
+    {
+        if (Time.timeScale == 0 && playerController.alive == true)
+        {
+            eggHide = false;
+            Time.timeScale = 1;
+            hidePaused();
+            showScore();
+        }
     }
 }
     

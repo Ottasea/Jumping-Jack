@@ -9,6 +9,8 @@ public class destroyerScript : MonoBehaviour
     public GameObject brownLeaf;
     public GameObject stripedLeaf;
     public GameObject eggLeaf;
+    public GameObject yellowLeaf;
+    public GameObject stripedClone;
     public float leafDistance = 8f;
     public float minY = 0.2f;
     public float maxY = 0.5f;
@@ -44,10 +46,16 @@ public class destroyerScript : MonoBehaviour
                 Instantiate(brownLeaf, new Vector2(Random.Range(minX, maxX), transform.position.y + (leafDistance + Random.Range(minY, maxY))), Quaternion.identity);
             }
 
-            else if (Random.Range(1, 5) == 3)
+            else if (Random.Range(1, 7) == 3)
             {
                 Destroy(collision.gameObject);
                 Instantiate(eggLeaf, new Vector2(Random.Range(minX, maxX), transform.position.y + (leafDistance + Random.Range(minY, maxY))), Quaternion.identity);
+            }
+
+            else if (Random.Range(1, 40) == 4)
+            {
+                Destroy(collision.gameObject);
+                Instantiate(yellowLeaf, new Vector2(Random.Range(minX, maxX), transform.position.y + (leafDistance + Random.Range(minY, maxY))), Quaternion.identity);
             }
 
             else
@@ -84,7 +92,7 @@ public class destroyerScript : MonoBehaviour
 
         else if (collision.gameObject.name.StartsWith("eggLeaf"))
         {
-            if (Random.Range(1, 5) == 3)
+            if (Random.Range(1, 7) == 3)
             {
                 collision.gameObject.transform.position = new Vector2(Random.Range(minX, maxX), transform.position.y + (leafDistance + Random.Range(minY, maxY)));
             }
@@ -97,5 +105,16 @@ public class destroyerScript : MonoBehaviour
             }
         }
 
+        else if (collision.gameObject.name.StartsWith("yLeaf"))
+        {
+                Destroy(collision.gameObject);
+
+                Instantiate(greenLeaf, new Vector2(Random.Range(minX, maxX), transform.position.y + (leafDistance + Random.Range(minY, maxY))), Quaternion.identity);
+        }
+
+        else if (collision.gameObject.name.StartsWith("stripedClone"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }
